@@ -131,7 +131,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10 text-center">
           <p className="text-gray-500 text-xs tracking-wide">
-            © 2024 Filtros D'Agua. Todos os direitos reservados.
+            © 2026 Filtros D'Agua. Todos os direitos reservados.
           </p>
         </div>
       </div>
