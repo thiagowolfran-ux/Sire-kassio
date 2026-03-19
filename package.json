@@ -10,7 +10,6 @@
     "dev": "vite --port=3000 --host=0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "serve -s dist -p ${PORT:-3000}",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit"
   },
@@ -23,7 +22,6 @@
     "motion": "^12.23.24",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "serve": "^14.2.4",
     "swiper": "^12.1.2"
   },
   "devDependencies": {
