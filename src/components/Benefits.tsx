@@ -31,12 +31,12 @@ export default function Benefits() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.2 }}
-              className="text-center flex flex-col items-center"
+              className="group text-center flex flex-col items-center border border-navy/10 rounded-2xl p-8 bg-white transition-all duration-300 hover:border-cyan hover:shadow-xl hover:-translate-y-1"
             >
-              <div className="w-16 h-16 bg-cyan/10 rounded-2xl flex items-center justify-center mb-6">
-                <benefit.icon className="text-cyan w-8 h-8" />
+              <div className="w-16 h-16 bg-cyan/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-cyan transition-colors duration-300">
+                <benefit.icon className="text-cyan w-8 h-8 group-hover:text-white transition-colors duration-300" />
               </div>
-              <h3 className="text-xl font-display font-bold mb-4">{benefit.title}</h3>
+              <h3 className="text-xl font-display font-bold mb-4 group-hover:text-cyan transition-colors duration-300">{benefit.title}</h3>
               <p className="text-gray-600 leading-relaxed">
                 {benefit.description}
               </p>
