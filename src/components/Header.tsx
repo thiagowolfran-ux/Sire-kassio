@@ -1,9 +1,17 @@
 import { useState } from 'react';
-import { MessageCircle } from 'lucide-react';
-import { motion } from 'motion/react';
+import { MessageCircle, Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function Header() {
   const [isLogoLoaded, setIsLogoLoaded] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const navLinks = [
+    { name: 'Início', href: '#' },
+    { name: 'Purificadores', href: '#purifiers' },
+    { name: 'Serviços', href: '#services' },
+    { name: 'Sobre Nós', href: '#about' },
+  ];
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
@@ -23,28 +31,64 @@ export default function Header() {
             />
           </div>
 
-          {/* Navigation */}
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#" className="nav-link">Início</a>
-            <a href="#purifiers" className="nav-link">Purificadores</a>
-            <a href="#services" className="nav-link">Serviços</a>
-            <a href="#about" className="nav-link">Sobre Nós</a>
+            {navLinks.map((link) => (
+              <a key={link.name} href={link.href} className="nav-link">{link.name}</a>
+            ))}
           </nav>
 
-          {/* WhatsApp Button */}
-          <motion.a
-            href="https://wa.me/556934223008"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-cyan text-white px-6 py-3 rounded-full flex items-center gap-2 font-semibold shadow-md hover:bg-cyan/90 transition-all"
-          >
-            <MessageCircle size={20} />
-            <span className="hidden sm:inline">Contato via WhatsApp</span>
-          </motion.a>
+          {/* Actions */}
+          <div className="flex items-center gap-4">
+            {/* WhatsApp Button */}
+            <motion.a
+              href="https://wa.me/556934223008"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-cyan text-white px-4 sm:px-6 py-3 rounded-full flex items-center gap-2 font-semibold shadow-md hover:bg-cyan/90 transition-all"
+            >
+              <MessageCircle size={20} />
+              <span className="hidden sm:inline">Contato via WhatsApp</span>
+            </motion.a>
+
+            {/* Mobile Menu Toggle */}
+            <button 
+              className="md:hidden p-2 text-navy hover:text-cyan transition-colors"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Mobile Navigation */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
+          >
+            <div className="flex flex-col px-4 py-4 space-y-2">
+              {navLinks.map((link) => (
+                <a 
+                  key={link.name} 
+                  href={link.href} 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-navy font-medium text-lg hover:text-cyan transition-colors py-3 border-b border-gray-50 last:border-0"
+                >
+                  {link.name}
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

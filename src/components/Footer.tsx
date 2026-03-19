@@ -8,11 +8,24 @@ export default function Footer() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setFormStatus('submitting');
-    // Simulate API call
+    
+    // Get form data
+    const form = e.target as HTMLFormElement;
+    const name = (form.elements[0] as HTMLInputElement).value;
+    const email = (form.elements[1] as HTMLInputElement).value;
+    const message = (form.elements[2] as HTMLTextAreaElement).value;
+
+    // Create mailto link
+    const subject = encodeURIComponent(`Novo contato pelo site: ${name}`);
+    const body = encodeURIComponent(`Nome: ${name}\nE-mail: ${email}\n\nMensagem:\n${message}`);
+    
+    // Simulate API call for UX
     setTimeout(() => {
+      window.location.href = `mailto:contato@filtrosdagua.com?subject=${subject}&body=${body}`;
       setFormStatus('success');
+      form.reset();
       setTimeout(() => setFormStatus('idle'), 3000);
-    }, 1000);
+    }, 800);
   };
 
   return (
