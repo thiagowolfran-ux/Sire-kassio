@@ -35,7 +35,7 @@ export default function VideoSection() {
           {/* Substitua o src abaixo pelo link do seu vídeo (YouTube, Vimeo, ou arquivo MP4) */}
           <iframe
             className="absolute inset-0 w-full h-full"
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=placeholder"
+            src="https://drive.google.com/file/d/12GNY3NT6pVFde49HWGFoUpbtnbj2ntM2/preview"
             title="Vídeo Institucional"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

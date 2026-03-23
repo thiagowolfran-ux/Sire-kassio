@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 
 const products = [
@@ -24,6 +25,24 @@ const products = [
 ];
 
 export default function ProductShowcase() {
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+
+  // Busca o nome do produto com base no ID selecionado e exibe no título da página
+  useEffect(() => {
+    if (selectedProductId !== null) {
+      const selectedProduct = products.find(product => product.id === selectedProductId);
+      if (selectedProduct) {
+        document.title = `${selectedProduct.name} | Filtros D'Agua`;
+      }
+    } else {
+      document.title = "Filtros D'Agua - Purificação e Climatização";
+    }
+
+    return () => {
+      document.title = "Filtros D'Agua - Purificação e Climatização";
+    };
+  }, [selectedProductId]);
+
   return (
     <section id="purifiers" className="bg-white py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,6 +62,7 @@ export default function ProductShowcase() {
           {products.map((product, index) => (
             <motion.div
               key={product.id}
+              onClick={() => setSelectedProductId(product.id)}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -52,7 +72,9 @@ export default function ProductShowcase() {
                 scale: 1.02,
                 boxShadow: "0px 12px 32px rgba(10, 35, 66, 0.12)"
               }}
-              className="product-card bg-white rounded-xl p-6 flex flex-col cursor-pointer"
+              className={`product-card bg-white rounded-xl p-6 flex flex-col cursor-pointer border-2 transition-colors ${
+                selectedProductId === product.id ? 'border-cyan' : 'border-transparent'
+              }`}
             >
               <div className="aspect-square mb-6 overflow-hidden rounded-lg">
                 <img
