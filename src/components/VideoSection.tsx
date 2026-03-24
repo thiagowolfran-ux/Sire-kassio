@@ -32,16 +32,15 @@ export default function VideoSection() {
           transition={{ duration: 0.5 }}
           className="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl aspect-video bg-navy flex items-center justify-center group"
         >
-          {/* Usando a tag video com autoPlay, muted e loop para reprodução automática */}
-          <video
-            className="absolute inset-0 w-full h-full object-cover"
-            src="https://drive.google.com/uc?export=download&id=12GNY3NT6pVFde49HWGFoUpbtnbj2ntM2"
-            autoPlay
-            muted
-            loop
-            playsInline
-            controls
-          />
+          {/* Vídeo do YouTube com autoplay, mudo (obrigatório para autoplay) e loop */}
+          <iframe
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            src="https://www.youtube.com/embed/8KuiheYDY20?autoplay=1&mute=1&loop=1&playlist=8KuiheYDY20&controls=0&showinfo=0&rel=0"
+            title="Vídeo Institucional"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
         </motion.div>
       </div>
     </section>
