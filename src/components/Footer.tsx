@@ -1,19 +1,48 @@
 import { Facebook, Instagram, Mail, MapPin, Phone, Send } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 
 export default function Footer() {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [errors, setErrors] = useState({ name: '', email: '', message: '' });
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { name: '', email: '', message: '' };
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'O nome é obrigatório.';
+      isValid = false;
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'O e-mail é obrigatório.';
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Insira um e-mail válido.';
+      isValid = false;
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = 'A mensagem é obrigatória.';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
     setFormStatus('submitting');
     
-    // Get form data
-    const form = e.target as HTMLFormElement;
-    const name = (form.elements[0] as HTMLInputElement).value;
-    const email = (form.elements[1] as HTMLInputElement).value;
-    const message = (form.elements[2] as HTMLTextAreaElement).value;
+    const { name, email, message } = formData;
 
     // Create mailto link
     const subject = encodeURIComponent(`Novo contato pelo site: ${name}`);
@@ -23,9 +52,18 @@ export default function Footer() {
     setTimeout(() => {
       window.location.href = `mailto:contato@filtrosdagua.com?subject=${subject}&body=${body}`;
       setFormStatus('success');
-      form.reset();
+      setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setFormStatus('idle'), 3000);
     }, 800);
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (errors[name as keyof typeof errors]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
   return (
@@ -83,30 +121,39 @@ export default function Footer() {
           {/* Contact Form */}
           <div className="flex flex-col items-center md:items-start w-full">
             <h3 className="text-xl font-display font-bold mb-6 text-white">Envie uma Mensagem</h3>
-            <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4">
+            <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4" noValidate>
               <div>
                 <input 
                   type="text" 
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   placeholder="Seu Nome" 
-                  required
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-cyan focus:ring-1 focus:ring-cyan transition-colors"
+                  className={`w-full bg-white/5 border ${errors.name ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-white/10 focus:border-cyan focus:ring-cyan'} rounded-lg px-4 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-1 transition-colors`}
                 />
+                {errors.name && <p className="text-red-400 text-xs mt-1 text-left">{errors.name}</p>}
               </div>
               <div>
                 <input 
                   type="email" 
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="Seu E-mail" 
-                  required
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-cyan focus:ring-1 focus:ring-cyan transition-colors"
+                  className={`w-full bg-white/5 border ${errors.email ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-white/10 focus:border-cyan focus:ring-cyan'} rounded-lg px-4 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-1 transition-colors`}
                 />
+                {errors.email && <p className="text-red-400 text-xs mt-1 text-left">{errors.email}</p>}
               </div>
               <div>
                 <textarea 
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   placeholder="Sua Mensagem" 
-                  required
                   rows={3}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-cyan focus:ring-1 focus:ring-cyan transition-colors resize-none"
+                  className={`w-full bg-white/5 border ${errors.message ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-white/10 focus:border-cyan focus:ring-cyan'} rounded-lg px-4 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-1 transition-colors resize-none`}
                 ></textarea>
+                {errors.message && <p className="text-red-400 text-xs mt-1 text-left">{errors.message}</p>}
               </div>
               <button 
                 type="submit" 
