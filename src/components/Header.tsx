@@ -72,15 +72,16 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
             className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
           >
-            <div className="flex flex-col px-4 py-4 space-y-2">
+            <div className="flex flex-col items-center justify-center px-4 py-6 space-y-4">
               {navLinks.map((link) => (
                 <a 
                   key={link.name} 
                   href={link.href} 
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-navy font-medium text-lg hover:text-cyan transition-colors py-3 border-b border-gray-50 last:border-0"
+                  className="text-navy font-medium text-xl hover:text-cyan transition-colors py-2"
                 >
                   {link.name}
                 </a>

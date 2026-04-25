@@ -114,6 +114,8 @@ export default function ProductShowcase() {
                   alt={product.name}
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <h3 className="text-navy font-semibold text-lg mb-6">{product.name}</h3>

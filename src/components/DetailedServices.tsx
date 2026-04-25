@@ -84,6 +84,8 @@ export default function DetailedServices() {
                       alt={service.alt}
                       className={`w-full h-[400px] ${service.imageFit || 'object-cover'} ${service.imagePosition || 'object-center'}`}
                       referrerPolicy="no-referrer"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </motion.div>
                   {/* Decorative background element */}
