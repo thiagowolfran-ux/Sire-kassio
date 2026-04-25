@@ -1,10 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MessageCircle, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function Header() {
   const [isLogoLoaded, setIsLogoLoaded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navLinks = [
     { name: 'Início', href: '#' },
@@ -14,18 +28,18 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
+    <header className={`sticky top-0 z-50 bg-white transition-all duration-300 ${isScrolled ? 'shadow-md py-1' : 'shadow-sm'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center min-h-[140px] py-2">
+        <div className={`flex justify-between items-center transition-all duration-300 ${isScrolled ? 'min-h-[80px]' : 'min-h-[140px] py-2'}`}>
           {/* Logo */}
-          <div className="flex items-center gap-2 relative h-[120px] min-w-[150px]">
+          <div className="flex items-center gap-2 relative transition-all duration-300" style={{ height: isScrolled ? '70px' : '120px' }}>
             {!isLogoLoaded && (
               <div className="absolute inset-0 bg-gray-100 animate-pulse rounded-md"></div>
             )}
             <img 
               src="https://drive.google.com/thumbnail?id=10x77eXiYm89tPvDwK25eh8PtI2bJgHsP&sz=w1000" 
               alt="Logo Filtros D'Agua" 
-              className={`h-[120px] w-auto max-w-[250px] object-contain transition-opacity duration-300 ${isLogoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`w-auto max-w-[250px] object-contain transition-all duration-300 ${isScrolled ? 'h-[70px]' : 'h-[120px]'} ${isLogoLoaded ? 'opacity-100' : 'opacity-0'}`}
               onLoad={() => setIsLogoLoaded(true)}
               referrerPolicy="no-referrer"
             />
@@ -47,9 +61,9 @@ export default function Header() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-cyan text-white px-4 sm:px-6 py-3 rounded-full flex items-center gap-2 font-semibold shadow-md hover:bg-cyan/90 transition-all"
+              className={`bg-cyan text-white px-4 sm:px-6 rounded-full flex items-center gap-2 font-semibold shadow-md hover:bg-cyan/90 transition-all duration-300 ${isScrolled ? 'py-2 text-sm' : 'py-3'}`}
             >
-              <MessageCircle size={20} />
+              <MessageCircle size={isScrolled ? 18 : 20} />
               <span className="hidden sm:inline">Contato via WhatsApp</span>
             </motion.a>
 
