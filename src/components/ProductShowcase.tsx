@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Check } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 const products = [
   {
@@ -56,29 +57,64 @@ const products = [
 export default function ProductShowcase() {
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
-  // Busca o nome do produto com base no ID selecionado e exibe no título da página
   useEffect(() => {
     if (selectedProductId !== null) {
-      const selectedProduct = products.find(product => product.id === selectedProductId);
-      if (selectedProduct) {
-        document.body.style.overflow = 'hidden'; // Evita scroll atrás do modal
-        document.title = `${selectedProduct.name} | Filtros D'Agua`;
-      }
+      document.body.style.overflow = 'hidden'; // Evita scroll atrás do modal
     } else {
       document.body.style.overflow = 'auto';
-      document.title = "Filtros D'Agua - Purificação e Climatização";
     }
 
     return () => {
       document.body.style.overflow = 'auto';
-      document.title = "Filtros D'Agua - Purificação e Climatização";
     };
   }, [selectedProductId]);
 
   const selectedProduct = products.find(p => p.id === selectedProductId);
 
+  // Generate aggregate product schema for the page
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": products.map((product, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Product",
+        "name": product.name,
+        "image": product.image,
+        "description": product.description
+      }
+    }))
+  };
+
+  const selectedProductSchema = selectedProduct ? {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": selectedProduct.name,
+    "image": selectedProduct.image,
+    "description": selectedProduct.description,
+    "brand": {
+      "@type": "Brand",
+      "name": "Filtros D'Agua"
+    }
+  } : null;
+
   return (
     <section id="purifiers" className="bg-white py-20 relative">
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(itemListSchema)}
+        </script>
+      </Helmet>
+      {selectedProduct && selectedProductSchema && (
+        <Helmet>
+          <title>{`${selectedProduct.name} | Filtros D'Agua`}</title>
+          <meta name="description" content={selectedProduct.description} />
+          <script type="application/ld+json">
+            {JSON.stringify(selectedProductSchema)}
+          </script>
+        </Helmet>
+      )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

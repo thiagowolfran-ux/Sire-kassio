@@ -7,10 +7,12 @@ import VideoSection from './components/VideoSection';
 import PromoBanner from './components/PromoBanner';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
+import { SEO } from './components/SEO';
 
 export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO />
       <Header />
       <main className="flex-grow">
         <Hero />

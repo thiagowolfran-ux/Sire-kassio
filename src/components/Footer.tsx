@@ -50,7 +50,7 @@ export default function Footer() {
     
     // Simulate API call for UX
     setTimeout(() => {
-      window.location.href = `mailto:contato@filtrosdagua.com?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:filtrosdagua@hotmail.com?subject=${subject}&body=${body}`;
       setFormStatus('success');
       setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setFormStatus('idle'), 3000);
@@ -113,7 +113,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3 text-gray-300 justify-center md:justify-start">
                 <Mail className="text-cyan shrink-0" size={18} />
-                <span className="text-sm">contato@filtrosdagua.com</span>
+                <span className="text-sm">filtrosdagua@hotmail.com</span>
               </li>
             </ul>
           </div>
