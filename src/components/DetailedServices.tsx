@@ -23,7 +23,7 @@ const services = [
   {
     title: "Suporte e Garantia",
     description: "Oferecemos suporte técnico pós-venda dedicado e garantia estendida em nossos serviços e produtos. Sua tranquilidade é nossa prioridade número um há mais de 35 anos.",
-    image: "https://lh3.googleusercontent.com/d/1XQ2hLP2uT6Yd47cgwyI0tCkFtSj8wmv-",
+    image: "https://drive.google.com/thumbnail?id=1rcQIirnP_dV7DB6XQgV_0F6Ja5JHU5j4&sz=w1000",
     alt: "Equipe de suporte ao cliente",
     imageFit: "object-contain bg-gray-50"
   }
