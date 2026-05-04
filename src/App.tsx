@@ -5,6 +5,7 @@ import DetailedServices from './components/DetailedServices';
 import ProductShowcase from './components/ProductShowcase';
 import VideoSection from './components/VideoSection';
 import PromoBanner from './components/PromoBanner';
+import Gallery from './components/Gallery';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import { SEO } from './components/SEO';
@@ -21,6 +22,7 @@ export default function App() {
         <VideoSection />
         <ProductShowcase />
         <PromoBanner />
+        <Gallery />
         <Testimonials />
       </main>
       <Footer />

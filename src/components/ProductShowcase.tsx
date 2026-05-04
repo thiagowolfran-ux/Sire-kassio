@@ -8,7 +8,7 @@ const products = [
     id: 1,
     name: "Purificador de Água Everest Star",
     image: "https://drive.google.com/thumbnail?id=1TCHDWTTutGVfHQjIHuYeAawcF_87S_CX&sz=w1000",
-    description: "Design moderno e eficiência para sua casa ou escritório. O Soft by Everest traz o melhor da refrigeração por compressor com alta capacidade e economia de energia.",
+    description: "Design moderno e eficiência para sua casa ou escritório. O Everest traz o melhor da refrigeração por compressor com alta capacidade e economia de energia.",
     features: [
       "Água gelada e natural",
       "Alta capacidade de refrigeração",
