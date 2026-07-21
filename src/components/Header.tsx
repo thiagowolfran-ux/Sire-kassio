@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { MessageCircle, Menu, X } from 'lucide-react';
+import { User, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import MembersAreaModal from './MembersAreaModal';
 
 export default function Header() {
   const [isLogoLoaded, setIsLogoLoaded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMembersModalOpen, setIsMembersModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,17 +56,17 @@ export default function Header() {
 
           {/* Actions */}
           <div className="flex items-center gap-4">
-            {/* WhatsApp Button */}
+            {/* Members Area Button */}
             <motion.a
-              href="https://wa.me/556934223008"
+              href="https://areademembros.filtrosdagua.com/index.php/mine"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={`bg-cyan text-white px-4 sm:px-6 rounded-full flex items-center gap-2 font-semibold shadow-md hover:bg-cyan/90 transition-all duration-300 ${isScrolled ? 'py-2 text-sm' : 'py-3'}`}
             >
-              <MessageCircle size={isScrolled ? 18 : 20} />
-              <span className="hidden sm:inline">Contato via WhatsApp</span>
+              <User size={isScrolled ? 18 : 20} />
+              <span className="hidden sm:inline">Área de Membros</span>
             </motion.a>
 
             {/* Mobile Menu Toggle */}
@@ -104,6 +106,7 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
+      <MembersAreaModal isOpen={isMembersModalOpen} onClose={() => setIsMembersModalOpen(false)} />
     </header>
   );
 }
